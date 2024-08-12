@@ -1,3 +1,8 @@
+// an Advance POS system in which errors can be reduced using speech detection and more.
+// 
+// this is a project's core idea
+
+
 #include <iostream>
 #include <map>
 
