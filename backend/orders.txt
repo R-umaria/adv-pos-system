@@ -1,16 +1,10 @@
 Order:
+1 * Small (Cream 2, Sugar 3)
+--------------------------
+Order:
+3 * Medium (Double Double)
+--------------------------
+Order:
 1 * Large (Black)
-1 * Small (Double Double)
---------------------------
-Order:
-1 * Medium (Cream 3, Milk 4, Sugar 2)
-1 * Extra Large (Regular)
---------------------------
-Order:
---------------------------
-Order:
-1 * Small (Regular)
---------------------------
-Order:
-5 * Medium (Black, Regular, Double Double, Triple Triple, Black)
+1 * Extra Large (Double Double)
 --------------------------

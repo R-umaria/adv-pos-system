@@ -25,6 +25,7 @@ void CoffeeOrder::displayMenu() {
     cout << "X: Extra Large" << endl;
     cout << "H: History" << endl;
     cout << "P: Pay Now" << endl;
+    cout << "E: Exit" << endl; // Updated option to exit
 }
 
 // Process the coffee order based on user input
@@ -37,7 +38,7 @@ void CoffeeOrder::processOrder() {
     string additions = "";
 
     while (true) {
-        cout << "\nSelect an option (Q, S, M, L, X, H, P): ";
+        cout << "\nSelect an option (Q, S, M, L, X, H, P, E): ";
 
         if (!(cin >> choice)) {
             cout << "Enter a valid option!" << endl;
@@ -48,7 +49,16 @@ void CoffeeOrder::processOrder() {
 
         choice = tolower(choice); // Convert choice to lowercase for consistency
 
-        if (choice == 'p') {
+        if (choice == 'e') {
+            cout << "Are you sure, do you want to exit? Y/N: ";
+            cin >> choice;
+            if (choice == 'y' || choice == 'Y') {
+                cout << "Exiting program..." << endl;
+                exit(0); // Exit the program
+            }
+            continue;
+        }
+        else if (choice == 'p') {
             saveOrderToFile();
             displayCheckoutSummary();
             menu.clear(); // Clear menu after saving and displaying

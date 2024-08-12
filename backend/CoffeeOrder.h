@@ -10,23 +10,20 @@ class CoffeeOrder {
 public:
     CoffeeOrder();
 
-    // Methods to manage coffee orders
-    void addOrder(const std::string& size, int quantity, const std::string& additions);
-    void displayMenu();
-    void processOrder();
-    void displayCheckoutSummary();
-    void saveOrderToFile();
-    void loadPreviousOrders();
-    void viewOrderHistory();
+    void displayMenu(); // Display the main menu
+    void processOrder(); // Process user input and orders
 
 private:
-    std::vector<std::pair<std::string, std::pair<int, std::string>>> menu;
-    std::string currentOrderFileName;
+    void addOrder(const std::string& size, int quantity, const std::string& additions); // Add an order to the menu
+    void processAdditions(std::string& additions); // Process additions to the coffee
+    void displayAdditionsMenu(); // Display additions menu
+    void handleAddition(char choice, int& addAmount, std::string& coffeeAddition, std::string& additions); // Handle additions
+    void displayCheckoutSummary(); // Display the checkout summary
+    void saveOrderToFile(); // Save the current order to a file
+    void viewOrderHistory(); // View previous orders from the file
 
-    void processAdditions(std::string& additions);
-    void handleAddition(char choice, int& addAmount, std::string& coffeeAddition, std::string& additions);
-    void displayAdditionsMenu();
-    void writeOrderToFile();
+    std::vector<std::pair<std::string, std::pair<int, std::string>>> menu; // Stores size, quantity, and coffee addition
+    const std::string currentOrderFileName; // File to store orders
 };
 
 #endif // COFFEEORDER_H
