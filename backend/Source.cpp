@@ -4,12 +4,13 @@
 
 
 #include <iostream>
-#include <map>
+#include <vector>
+#include <utility>
 
 using namespace std;
 
 int main() {
-    map<char, int> menu = { {'S', 0}, {'M', 0}, {'L', 0}, {'X', 0}, {'P', 0} };
+    vector<pair<char, int>> menu;
     char choice;
     int quantity;
 
@@ -27,7 +28,7 @@ int main() {
         if (choice == 'P') {
             break;
         }
-        else if (menu.find(choice) != menu.end()) {
+        else if (choice == 'S' || choice == 'M' || choice == 'L' || choice == 'X') {
             cout << "Enter quantity (press 0 to skip, default is 1): ";
             cin >> quantity;
 
@@ -35,7 +36,7 @@ int main() {
                 quantity = 1;
             }
 
-            menu[choice] += quantity;
+            menu.push_back(make_pair(choice, quantity));
         }
         else {
             cout << "Invalid option. Please try again." << endl;
@@ -44,13 +45,11 @@ int main() {
 
     cout << "\nCheckout Summary:\n";
     for (const auto& item : menu) {
-        if (item.second > 0) {
-            switch (item.first) {
-            case 'S': cout << "Small: " << item.second << endl; break;
-            case 'M': cout << "Medium: " << item.second << endl; break;
-            case 'L': cout << "Large: " << item.second << endl; break;
-            case 'X': cout << "Extra Large: " << item.second << endl; break;
-            }
+        switch (item.first) {
+        case 'S': cout << "Small: " << item.second << endl; break;
+        case 'M': cout << "Medium: " << item.second << endl; break;
+        case 'L': cout << "Large: " << item.second << endl; break;
+        case 'X': cout << "Extra Large: " << item.second << endl; break;
         }
     }
 
