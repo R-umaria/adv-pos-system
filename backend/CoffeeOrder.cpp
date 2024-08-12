@@ -3,11 +3,12 @@
 #include <iostream>
 #include <limits> // for std::numeric_limits
 #include <cctype> // for std::tolower
+#include <fstream> // for file handling
 
 using namespace std;
 
 // Constructor
-CoffeeOrder::CoffeeOrder() {}
+CoffeeOrder::CoffeeOrder() : currentOrderFileName("orders.txt") {}
 
 // Add an order to the menu
 void CoffeeOrder::addOrder(const string& size, int quantity, const string& additions) {
@@ -22,6 +23,7 @@ void CoffeeOrder::displayMenu() {
     cout << "M: Medium" << endl;
     cout << "L: Large" << endl;
     cout << "X: Extra Large" << endl;
+    cout << "H: History" << endl;
     cout << "P: Pay Now" << endl;
 }
 
@@ -35,7 +37,7 @@ void CoffeeOrder::processOrder() {
     string additions = "";
 
     while (true) {
-        cout << "\nSelect an option (Q, S, M, L, X, P): ";
+        cout << "\nSelect an option (Q, S, M, L, X, H, P): ";
 
         if (!(cin >> choice)) {
             cout << "Enter a valid option!" << endl;
@@ -47,7 +49,14 @@ void CoffeeOrder::processOrder() {
         choice = tolower(choice); // Convert choice to lowercase for consistency
 
         if (choice == 'p') {
-            break;
+            saveOrderToFile();
+            displayCheckoutSummary();
+            menu.clear(); // Clear menu after saving and displaying
+            continue; // Continue to take new orders
+        }
+        else if (choice == 'h') {
+            viewOrderHistory();
+            continue; // Return to menu after displaying history
         }
         else if (choice == 'q') {
             cout << "Enter quantity: ";
@@ -113,7 +122,7 @@ void CoffeeOrder::processAdditions(string& additions) {
         if (choice == 'n') break;
 
         if (choice == 'c' || choice == 'm' || choice == 's') {
-            cout << "How much? : ";
+            cout << "How much? (1, 2, 3...): ";
             if (!(cin >> addAmount) || addAmount <= 0) {
                 cout << "Invalid input. Defaulting to 1." << endl;
                 addAmount = 1;
@@ -159,4 +168,36 @@ void CoffeeOrder::displayCheckoutSummary() {
         cout << item.second.first << " * " << item.first << " (" << item.second.second << ")" << endl;
     }
     cout << "\n+-------------------+\n\n";
+}
+
+// Save the current order to a file
+void CoffeeOrder::saveOrderToFile() {
+    ofstream outFile(currentOrderFileName, ios::app); // Append to file
+    if (!outFile) {
+        cerr << "Error opening file for writing!" << endl;
+        return;
+    }
+
+    outFile << "Order:\n";
+    for (const auto& item : menu) {
+        outFile << item.second.first << " * " << item.first << " (" << item.second.second << ")\n";
+    }
+    outFile << "--------------------------\n";
+    outFile.close();
+}
+
+// Load and display previous orders from the file
+void CoffeeOrder::viewOrderHistory() {
+    ifstream inFile(currentOrderFileName);
+    if (!inFile) {
+        cerr << "Error opening file for reading!" << endl;
+        return;
+    }
+
+    string line;
+    cout << "\nOrder History:\n";
+    while (getline(inFile, line)) {
+        cout << line << endl;
+    }
+    inFile.close();
 }

@@ -11,9 +11,10 @@ using namespace std;
 int main() {
     CoffeeOrder coffeeOrder;
 
-    coffeeOrder.displayMenu();
-    coffeeOrder.processOrder();
-    coffeeOrder.displayCheckoutSummary();
+    while (true) {
+        coffeeOrder.displayMenu(); // Display menu once per iteration
+        coffeeOrder.processOrder(); // Process user input and orders
+    }
 
     return 0;
 }
